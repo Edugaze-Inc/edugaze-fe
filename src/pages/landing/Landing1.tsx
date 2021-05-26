@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/button';
 import { Image } from '@chakra-ui/image';
-import { Box, BoxProps, Flex, Text } from '@chakra-ui/layout';
+import { Box, BoxProps, Flex, Heading, Text } from '@chakra-ui/layout';
 import landing1 from 'src/assets/landing1.svg';
 
 export const Landing1: React.FC<BoxProps> = (props) => (
@@ -10,14 +10,29 @@ export const Landing1: React.FC<BoxProps> = (props) => (
       flexDirection={['column-reverse', 'column-reverse', 'row']}
     >
       <Box>
-        <Text paddingTop={24} fontWeight="bold" fontSize="4xl" mb="10">
+        <Heading
+          paddingTop={24}
+          textAlign={['center', 'center', 'unset']}
+          fontWeight="bold"
+          fontSize="4xl"
+          mb="10"
+        >
           Make your online lectures <Text color="cyan.500">smarter</Text>
-        </Text>
-        <Text fontSize="2xl" mb={10} maxW="360px">
+        </Heading>
+        <Text
+          fontSize="2xl"
+          mb={10}
+          maxW={['unset', 'unset', '360px']}
+          textAlign={['center', 'center', 'unset']}
+        >
           Real-time emotion detection, interactive polls and much more! All in
           one place
         </Text>
-        <Button colorScheme="cyan" textColor="white">
+        <Button
+          colorScheme="cyan"
+          width={['100%', '100%', 'unset']}
+          textColor="white"
+        >
           Try for free
         </Button>
       </Box>

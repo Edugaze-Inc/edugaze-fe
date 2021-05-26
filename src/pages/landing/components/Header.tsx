@@ -7,7 +7,7 @@ export const Header: React.FC<FlexProps> = (props) => {
   return (
     <Flex justifyContent="space-between" {...props}>
       <Logo />
-      <HStack spacing={8}>
+      <HStack spacing={8} display={['none', 'none', 'flex']}>
         <Link>About</Link>
         <Link>Pricing</Link>
         <Link>FAQs</Link>
