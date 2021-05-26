@@ -4,7 +4,7 @@ import { Box, BoxProps, Flex, Heading, Text } from '@chakra-ui/layout';
 import landing1 from 'src/assets/landing1.svg';
 
 export const Landing1: React.FC<BoxProps> = (props) => (
-  <Box height={'calc(100vh - 88px)'} pt="130px" {...props}>
+  <Box minHeight={'calc(100vh - 88px)'} pt={[10, 10, '130px']} {...props}>
     <Flex
       justify="space-between"
       flexDirection={['column-reverse', 'column-reverse', 'row']}
@@ -36,7 +36,7 @@ export const Landing1: React.FC<BoxProps> = (props) => (
           Try for free
         </Button>
       </Box>
-      <Image src={landing1} />
+      <Image src={landing1} px={[16, 16, 'unset']} />
     </Flex>
   </Box>
 );

@@ -8,7 +8,7 @@ import { Landing4 } from './Landing4';
 import { Landing5 } from './Landing5';
 
 export const Landing = () => (
-  <Box paddingX={20} paddingTop={10}>
+  <Box paddingX={[4, 4, 20]} paddingTop={[4, 4, 10]} minW="400px">
     <Header />
     <Landing1 />
     <Landing2 />

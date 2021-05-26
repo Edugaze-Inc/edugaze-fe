@@ -4,9 +4,8 @@ import { Tag } from '@chakra-ui/tag';
 import landing4 from 'src/assets/landing4.svg';
 
 export const Landing4: React.FC<BoxProps> = (props) => (
-  <Flex justify="center" flexDir="column" height="100vh" {...props} pt="10">
+  <Flex justify="center" flexDir="column" minH="100vh" {...props} pt="10">
     <Flex
-      bottom="0"
       justify="space-around"
       align="center"
       mb="4"
@@ -25,7 +24,7 @@ export const Landing4: React.FC<BoxProps> = (props) => (
           Engage your class with interactive polls, quizzes and questions.
         </Text>
       </Box>
-      <Image src={landing4} mb={[16, 16, 'unset']} />
+      <Image px={[16, 16, 'unset']} src={landing4} mb={[16, 16, 'unset']} />
     </Flex>
   </Flex>
 );

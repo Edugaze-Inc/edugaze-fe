@@ -3,7 +3,7 @@ import { Box, BoxProps, Flex, Text } from '@chakra-ui/layout';
 import landing2 from 'src/assets/landing2.svg';
 
 export const Landing2: React.FC<BoxProps> = (props) => (
-  <Box height="100vh" {...props} pt="10">
+  <Box minH="100vh" {...props} pt="10">
     <Text fontWeight="semibold" fontSize="4xl" mb="7" textAlign="center">
       Transform your distance learning
     </Text>
@@ -28,7 +28,7 @@ export const Landing2: React.FC<BoxProps> = (props) => (
           Observe real-time statistics of students emotins during the lecture.
         </Text>
       </Box>
-      <Image src={landing2} />
+      <Image px={[16, 16, 'unset']} src={landing2} />
     </Flex>
   </Box>
 );
