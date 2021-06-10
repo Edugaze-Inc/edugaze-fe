@@ -1,10 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { Landing } from './pages/landing/Landing';
-
+import SignIn from './pages/signIn/components/SignIn';
+//import { Landing } from './pages/landing/Landing';
 function App() {
   return (
     <ChakraProvider>
-      <Landing />
+      <SignIn/>
     </ChakraProvider>
   );
 }
