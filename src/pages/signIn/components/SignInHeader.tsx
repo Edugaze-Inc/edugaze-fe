@@ -6,8 +6,12 @@ import {
 const SignInHeader = () => {
     return (
         <Box textAlign='center'>
-            <Heading>Welcome Back!</Heading>
+            <Heading fontSize='24px'
+            fontWeight='500'
+            fontStyle='normal'
+            >Welcome Back!</Heading>
         </Box>
+       
     )
 }
 
