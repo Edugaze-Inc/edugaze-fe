@@ -1,5 +1,3 @@
-import React from 'react';
-import SignInThemeSelector from './SignInThemeSelector';
 import SignInHeader from './SignInHeader';
 import SignInForm from './SignInForm';
 import {
@@ -34,10 +32,9 @@ const SignIn = () => {
         textAlign='center'
         boxShadow='lg'
       >
-        <ThemeSelector />
         <Box p={4}>
-          <LoginHeader />
-          <LoginForm />
+          <SignInHeader />
+          <SignInForm />
         </Box>
       </Box>
     </Flex>
