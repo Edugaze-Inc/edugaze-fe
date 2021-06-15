@@ -43,7 +43,7 @@ const SignInForm = () => {
               <CheckIcon color='#31B3C2'/>
               </InputRightElement>
           </FormControl>
-          <Button bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4}>Sign In</Button>
+          <Button bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} marginBottom="5px">Sign In</Button>
           <BottomOrPart></BottomOrPart>
           <Button leftIcon={<Image px={[16, 16, 'unset']} mb={[16, 16, 'unset']} src={GmailIcon} objectFit="cover"/>} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4}>Sign Up with Google</Button>
           
