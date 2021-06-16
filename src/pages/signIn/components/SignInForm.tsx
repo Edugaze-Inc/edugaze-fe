@@ -3,7 +3,7 @@ import { Box, Icon, InputRightElement, InputLeftElement } from "@chakra-ui/react
 import { Checkbox} from "@chakra-ui/react"
 import { Input } from "@chakra-ui/react"
 import { Stack} from "@chakra-ui/react"
-import { CheckIcon } from '@chakra-ui/icons';
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { IconButton } from "@chakra-ui/react";
 import GmailIcon from 'src/assets/GmailIcon.svg';
 import BottomOrPart from './BottomOrPart';
@@ -12,12 +12,35 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
+import { useForm } from 'react-hook-form'
+import React, { useState } from 'react';
 import { Link } from "@chakra-ui/react"
+///////////////////////////////////////////////////////////////////
+
+type Profile = {
+  email: string
+  password: string
+}
+
 const VARIANT_COLOR = 'teal'
 const SignInForm = () => {
-    return (
+  const {register, handleSubmit} = useForm<Profile>()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const isInvalid = (password === '' || email === ''|| !(re.test(email))); 
+  const onSubmit = (data: Profile) => {
+    console.log("data", data);
+  };
+  const handleSignIn = (event:any) =>{
+    event.preventDefault();
+    alert(`Email: ${email} & Password: ${password}`);
+
+  }
+
+  return (
         <Box my={8}  textAlign='center'>
-        <form>
+        <form method="POST" onSubmit={handleSignIn}> 
   
           <FormControl 
           width='full'
@@ -25,9 +48,13 @@ const SignInForm = () => {
           bgColor='#EFEFEF'
           borderColor='#31B3C2'
           >
-            <Input type='email' placeholder='Email'/>
+            <Input type='email' 
+            placeholder='Email'value={email}
+            rule={{ required: true }}
+            onChange={event => setEmail(event.currentTarget.value)}
+            />
             <InputRightElement width="3rem" height="3rem">
-              <CheckIcon color='#31B3C2'/>
+            <Icon Icon={isInvalid? <CloseIcon/> : <CheckIcon/>} color={isInvalid?'#ff0000':'#31B3C2'}/>
               </InputRightElement>
             
           </FormControl>
@@ -38,12 +65,15 @@ const SignInForm = () => {
            bgColor='#EFEFEF'
            borderColor='#31B3C2'
            >
-            <Input type='password' placeholder='Password'/>
+            <Input type='password' placeholder='Password' value={password}
+            rule={{ required: true }}
+            onChange={event => setPassword(event.currentTarget.value)}
+            />
             <InputRightElement width="3rem" height="3rem">
-              <CheckIcon color='#31B3C2'/>
+              <Icon Icon={isInvalid? CloseIcon : CheckIcon} color={isInvalid?'#ff0000':'#31B3C2'}/>
               </InputRightElement>
           </FormControl>
-          <Button bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} marginBottom="5px">Sign In</Button>
+          <Button type="submit" isDisabled={isInvalid} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} marginBottom="5px">Sign In</Button>
           <BottomOrPart></BottomOrPart>
           <Button leftIcon={<Image px={[16, 16, 'unset']} mb={[16, 16, 'unset']} src={GmailIcon} objectFit="cover"/>} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4}>Sign Up with Google</Button>
           
