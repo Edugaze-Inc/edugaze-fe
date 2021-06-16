@@ -24,7 +24,7 @@ type Profile = {
 }
 
 const VARIANT_COLOR = 'teal'
-const SignInForm = () => {
+const SignUpForm = () => {
   const {register, handleSubmit} = useForm<Profile>()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -90,13 +90,13 @@ const SignInForm = () => {
               {pass}
               </InputRightElement>
           </FormControl>
-          <Button type="submit" isDisabled={isInvalid} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} marginBottom="5px">Sign In</Button>
+          <Button type="submit" isDisabled={isInvalid} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} marginBottom="5px">Sign Up</Button>
           <BottomOrPart></BottomOrPart>
-          <Button leftIcon={<Image px={[16, 16, 'unset']} mb={[16, 16, 'unset']} src={GmailIcon} objectFit="cover"/>} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4}>Sign In with Google</Button>
+          <Button leftIcon={<Image px={[16, 16, 'unset']} mb={[16, 16, 'unset']} src={GmailIcon} objectFit="cover"/>} bgColor='#31B3C2' textColor='#FFFFFF' width='full' mt={4} textAlign="center">Sign Up with Google</Button>
           <BottomTextPart/>
         </form>
       </Box>
     )
 }
 
-export default SignInForm
+export default SignUpForm
