@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { MainRouter } from 'src/components/Router';
+import { MainRouter } from './Router';
 
 function App() {
   return (
