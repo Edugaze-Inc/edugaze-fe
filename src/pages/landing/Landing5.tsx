@@ -3,6 +3,8 @@ import { BoxProps, Flex, Heading } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import landing5 from 'src/assets/landing5.svg';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 export const Landing5: React.FC<BoxProps> = (props) => (
   <Flex justify="center" flexDir="column" minH="100vh" {...props} pt="10">
     <Flex flexDir="column" align="center">
@@ -13,9 +15,11 @@ export const Landing5: React.FC<BoxProps> = (props) => (
           now
         </Heading>
       </Heading>
-      <Button colorScheme="cyan" textColor="white">
-        Try for free
-      </Button>
+      <RouterLink to="/signup">
+        <Button colorScheme="cyan" textColor="white">
+          Try for free
+        </Button>
+      </RouterLink>
     </Flex>
   </Flex>
 );

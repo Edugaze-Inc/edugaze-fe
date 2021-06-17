@@ -9,7 +9,7 @@ const SignUpHeader = () => {
             <Heading fontSize='24px'
             fontWeight='500'
             fontStyle='normal'
-            >Welcome Back!</Heading>
+            >Welcome!</Heading>
         </Box>
        
     )
