@@ -1,12 +1,16 @@
-import {
-    Avatar,
-    Divider,
-    Flex,
-    Heading,
-    IconButton
-} from "@chakra-ui/react";
-import { GoChevronRight, GoChevronLeft } from "react-icons/go";
+import { Flex, Heading, Icon, Image, Link, Text, Divider, Avatar, IconButton } from "@chakra-ui/react";
+import eye_logo from 'src/assets/eye_logo.svg';
 import { useState } from "react";
+import {
+    AiOutlineHome,
+    AiOutlineCalendar,
+    AiOutlineHistory,
+    AiOutlineBarChart,
+    AiOutlineSetting,
+    AiOutlineRight,
+    AiOutlineLeft
+} from "react-icons/ai";
+import NavItem from "./NavItem";
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large");
@@ -15,55 +19,103 @@ export default function Sidebar() {
     return (
         <Flex
             pos="sticky"
-            left="5"
-            h="95vh"
-            marginTop="2.5vh"
-            borderShadow="0 4px 12px 0 rgba(0,0,0,0.5)"
-            borderRadius={navSize === "small" ? "15px" : "30px"}
-            w={navSize === "small" ? "75px" : "200px"}
+            w={navSize === "small" ? "81px" : "262px"}
+            h="100vh"
             flexDir="column"
-            justifyContents="space-between"
+            alignItems={navSize === "small" ? "center" : "flex-start"}
+            background="white"
         >
             <Flex
-                p="5%"
                 flexDir="column"
-                w="100%"
-                alignItems={navSize === "small" ? "center" : "flex-start"}
-                mb={4}
-            >
-                <Divider />
-                <Flex mt={4} align="center">
-                    <Avatar size="sm" background={themeColor} />
-                    <Flex
-                        flexDir="row"
-                        ml={4}
+                justifyContent="space-between"
+                w="100%">
+
+                <Flex
+                    as="nav"
+                    w={navSize === "small" ? "53px" : "206px"}
+                    mt="28px"
+                >
+                    <Image w="53px"
+                        ml={navSize === "small" ? "14px" : "28px"}
+                        src={eye_logo}></Image>
+                    <Heading
+                        ml="13px"
+                        fontSize="32px"
+                        alignSelf="center"
+                        color="#31B3C2"
                         display={navSize === "small" ? "none" : "flex"}
                     >
-                        <Heading as="h3" size="sm" textColor={themeColor}>
-                            John Doe
-                        </Heading>
-                    </Flex>
+                        Edugaze
+                    </Heading>
                 </Flex>
+
+                {/* container of nav items */}
+                <Flex
+                    flexDir="column"
+                    alignItems={navSize === "small" ? "center" : "flex-start"}
+                    justifyContent="space-between"
+                    ml={navSize === "small" ? "0px" : "28px"}
+                    mt="100px">
+                    <Flex mt={4} align="center" mb={30}>
+                        <Avatar size="sm" background={themeColor} />
+                        <Flex
+                            flexDir="row"
+                            ml={4}
+                            display={navSize === "small" ? "none" : "flex"}
+                        >
+                            <Heading as="h3" size="sm" textColor={themeColor}>
+                                John Doe
+                            </Heading>
+                        </Flex>
+                    </Flex>
+
+                    <Divider w={navSize === "small" ? "40px" : "206px"}
+                        align="center" />
+
+                    {/* individual nav items */}
+                    <NavItem icon={AiOutlineHome} title="Home" navSize={navSize} active />
+                    <NavItem icon={AiOutlineCalendar} title="Calendar" navSize={navSize} />
+                    <NavItem icon={AiOutlineHistory} title="History" navSize={navSize} />
+                    <NavItem icon={AiOutlineBarChart} title="Statistics" navSize={navSize} />
+                    <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} />
+
+
+
+
+                    {/* toggle navbar button */}
+                    <Flex
+                        flexDir="row"
+                        align="center"
+
+                        mt="33px"
+                        mb="33px"
+                    >
+                        <IconButton
+                            aria-label="Expand Navbar"
+                            background="none"
+                            w="100%"
+                            icon={navSize === "small" ? <AiOutlineRight color={themeColor} /> : <AiOutlineLeft color={themeColor} />}
+                            onClick={() => {
+                                if (navSize === "small") changeNavSize("large");
+                                else changeNavSize("small");
+                            }}
+                        />
+                        <Flex
+                            flexDir="row"
+                            ml="20px"
+                            display={navSize === "small" ? "none" : "flex"}
+                        >
+                            <Text size="md" textColor={themeColor} fontWeight="bold">
+                                Collapse
+                            </Text>
+                        </Flex>
+
+                    </Flex>
+
+                </Flex>
+
             </Flex>
 
-            <Flex
-                p="5%"
-                flexDir="column"
-                alignItems={navSize === "small" ? "center" : "flex-start"}
-                as="nav"
-            >
-                <IconButton
-                    aria-label="Expand Navbar"
-                    background="none"
-                    mt={5}
-                    _hover={{ background: "none" }}
-                    icon={<GoChevronRight color={themeColor} />}
-                    onClick={() => {
-                        if (navSize === "small") changeNavSize("large");
-                        else changeNavSize("small");
-                    }}
-                />
-            </Flex>
         </Flex>
     );
 }
