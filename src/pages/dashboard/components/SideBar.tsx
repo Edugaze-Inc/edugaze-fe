@@ -18,9 +18,7 @@ export default function Sidebar() {
 
     return (
         <Flex
-            pos="sticky"
             w={navSize === "small" ? "81px" : "262px"}
-            h="100vh"
             flexDir="column"
             alignItems={navSize === "small" ? "center" : "flex-start"}
             background="white"
@@ -28,7 +26,8 @@ export default function Sidebar() {
             <Flex
                 flexDir="column"
                 justifyContent="space-between"
-                w="100%">
+                w="100%"
+            >
 
                 <Flex
                     as="nav"
@@ -82,13 +81,15 @@ export default function Sidebar() {
 
 
 
+
+
                     {/* toggle navbar button */}
                     <Flex
                         flexDir="row"
                         align="center"
-
                         mt="33px"
                         mb="33px"
+                        pos="sticky"
                     >
                         <IconButton
                             aria-label="Expand Navbar"
@@ -99,6 +100,7 @@ export default function Sidebar() {
                                 if (navSize === "small") changeNavSize("large");
                                 else changeNavSize("small");
                             }}
+                            _focus={{ border: 'none' }}
                         />
                         <Flex
                             flexDir="row"

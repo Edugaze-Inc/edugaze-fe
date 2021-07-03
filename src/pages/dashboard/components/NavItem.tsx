@@ -10,7 +10,7 @@ import {
 export default function NavItem({ icon, title, active, navSize }: any) {
     return (
         <Flex
-            mt={30}
+            mt="25px"
             flexDir="column"
             w="100%"
             alignItems={navSize == "small" ? "center" : "flex-start"}
@@ -22,14 +22,13 @@ export default function NavItem({ icon, title, active, navSize }: any) {
                     borderColor={"rgba(86, 202, 216, 1)"}
                     p="8px"
                     borderRadius={8}
-                    _hover={{ textDecor: 'none' }}
+                    _hover={{ textDecor: 'none', background: "rgba(145, 206, 199, 0.26)" }}
                     w={navSize === "large" ? "140px" : "40px"}
-
                 >
                     <MenuButton w="100%">
-                        <Flex color={active ? "rgba(86, 202, 216, 1)" : "#E2E2E2"}>
+                        <Flex color={active ? "rgba(86, 202, 216, 1)" : "gray.400"}>
                             <Icon as={icon} fontSize="2xl" />
-                            <Text ml={5} display={navSize == "small" ? "none" : "flex"}>{title}</Text>
+                            <Text ml="14px" display={navSize == "small" ? "none" : "flex"}>{title}</Text>
                         </Flex>
                     </MenuButton>
                 </Link>
