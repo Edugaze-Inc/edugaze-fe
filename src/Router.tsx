@@ -4,6 +4,8 @@ import { Landing } from 'src/pages/landing/Landing';
 import ScrollToTop from 'src/components/ScrollToTop';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { DashboardHomepage } from './pages/dashboard/DashboardHomepage';
+import MeetingsPage from './pages/dashboard/MeetingsPage';
 
 export const MainRouter = () => {
   return (
@@ -18,6 +20,9 @@ export const MainRouter = () => {
         </Route>
         <Route exact path="/signup">
           <FullSignUpForm />
+        </Route>
+        <Route exact path="/dashboard">
+          <DashboardHomepage />
         </Route>
       </Switch>
     </Router>
