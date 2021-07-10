@@ -1,10 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { Landing } from './pages/landing/Landing';
+import { MainRouter } from './Router';
 
 function App() {
   return (
     <ChakraProvider>
-      <Landing />
+      <MainRouter />
     </ChakraProvider>
   );
 }

@@ -3,6 +3,8 @@ import { Flex, HStack, Link } from '@chakra-ui/layout';
 import { FlexProps } from '@chakra-ui/react';
 import { Logo } from 'src/components/Logo';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 export const Header: React.FC<FlexProps> = (props) => {
   return (
     <Flex justifyContent="space-between" {...props}>
@@ -14,10 +16,14 @@ export const Header: React.FC<FlexProps> = (props) => {
         <Link>Contacts</Link>
       </HStack>
       <HStack spacing={10}>
-        <Link>Login</Link>
-        <Button colorScheme="cyan" textColor="white">
-          Try for free
-        </Button>
+        <Link as={RouterLink} to="/login">
+          Login
+        </Link>
+        <RouterLink to="/signup">
+          <Button colorScheme="cyan" textColor="white">
+            Try for free
+          </Button>
+        </RouterLink>
       </HStack>
     </Flex>
   );

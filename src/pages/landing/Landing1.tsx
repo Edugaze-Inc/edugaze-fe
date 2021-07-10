@@ -3,6 +3,8 @@ import { Image } from '@chakra-ui/image';
 import { Box, BoxProps, Flex, Heading, Text } from '@chakra-ui/layout';
 import landing1 from 'src/assets/landing1.svg';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 export const Landing1: React.FC<BoxProps> = (props) => (
   <Box minHeight={'calc(100vh - 88px)'} pt={[10, 10, '130px']} {...props}>
     <Flex
@@ -28,13 +30,15 @@ export const Landing1: React.FC<BoxProps> = (props) => (
           Real-time emotion detection, interactive polls and much more! All in
           one place
         </Text>
-        <Button
-          colorScheme="cyan"
-          width={['100%', '100%', 'unset']}
-          textColor="white"
-        >
-          Try for free
-        </Button>
+        <RouterLink to="/signup">
+          <Button
+            colorScheme="cyan"
+            width={['100%', '100%', 'unset']}
+            textColor="white"
+          >
+            Try for free
+          </Button>
+        </RouterLink>
       </Box>
       <Image src={landing1} px={[16, 16, 'unset']} />
     </Flex>
