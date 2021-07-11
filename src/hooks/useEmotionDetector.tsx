@@ -3,13 +3,8 @@ import * as faceapi from '@vladmandic/face-api';
 import { useDebounce } from 'use-debounce/lib';
 
 export function UseEmotionDetector() {
-  const [emotion, setEmotion] = useState({ previous: '', current: '' });
-  const debouncedEmotion = useDebounce(emotion, 250, {
-    equalityFn: (left, right) => {
-      return left.current === right.current && left.previous === right.previous;
-    },
-  })[0];
-
+  const [emotion, setEmotion] = useState('');
+  const debouncedEmotion = useDebounce(emotion, 250)[0];
   const videoEl = useRef<HTMLVideoElement | null>(null);
   let requestRef = useRef<number>();
   async function init() {
@@ -52,15 +47,9 @@ export function UseEmotionDetector() {
             });
         }
         if (highestEmotion) {
-          setEmotion({
-            previous: debouncedEmotion.current,
-            current: highestEmotion!,
-          });
+          setEmotion(highestEmotion);
         } else {
-          setEmotion({
-            previous: debouncedEmotion.current,
-            current: 'out'!,
-          });
+          setEmotion('out');
         }
 
         requestRef.current = requestAnimationFrame(step);
@@ -71,7 +60,7 @@ export function UseEmotionDetector() {
     return () => {
       video!.removeEventListener('playing', detectEmotions);
     };
-  }, [videoEl, debouncedEmotion]);
+  }, [videoEl]);
 
   useEffect(() => {
     //call analysis api here
