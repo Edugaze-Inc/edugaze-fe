@@ -3,6 +3,7 @@ import * as faceapi from '@vladmandic/face-api';
 
 export function useEmotionDetector() {
   const [emotion, setEmotion] = useState('');
+  const [prevEmotion, setPrevEmotion] = useState('');
 
   const videoEl = useRef<HTMLVideoElement | null>(null);
   let requestRef = useRef<number>();
@@ -61,7 +62,8 @@ export function useEmotionDetector() {
 
   useEffect(() => {
     //call analysis api here
-    console.log(emotion);
+    //console.log('prev: ' + prevEmotion + '  current: ' + emotion);
+    setPrevEmotion(emotion);
   }, [emotion]);
 
   //return <video ref={videoEl} />;
