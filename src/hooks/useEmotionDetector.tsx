@@ -1,9 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import * as faceapi from '@vladmandic/face-api';
+import { useDebounce } from 'use-debounce/lib';
 
-export function useEmotionDetector() {
-  const [emotion, setEmotion] = useState('');
-  const [prevEmotion, setPrevEmotion] = useState('');
+export function UseEmotionDetector() {
+  const [emotion, setEmotion] = useState({ previous: '', current: '' });
+  const debouncedEmotion = useDebounce(emotion, 250, {
+    equalityFn: (left, right) => {
+      return left.current === right.current && left.previous === right.previous;
+    },
+  })[0];
 
   const videoEl = useRef<HTMLVideoElement | null>(null);
   let requestRef = useRef<number>();
@@ -47,10 +52,15 @@ export function useEmotionDetector() {
             });
         }
         if (highestEmotion) {
-          let emotion: string = highestEmotion;
-          setEmotion(emotion);
+          setEmotion({
+            previous: debouncedEmotion.current,
+            current: highestEmotion!,
+          });
         } else {
-          setEmotion('out');
+          setEmotion({
+            previous: debouncedEmotion.current,
+            current: 'out'!,
+          });
         }
 
         requestRef.current = requestAnimationFrame(step);
@@ -58,13 +68,15 @@ export function useEmotionDetector() {
 
       requestRef.current = requestAnimationFrame(step);
     }
-  }, [videoEl]);
+    return () => {
+      video!.removeEventListener('playing', detectEmotions);
+    };
+  }, [videoEl, debouncedEmotion]);
 
   useEffect(() => {
     //call analysis api here
-    //console.log('prev: ' + prevEmotion + '  current: ' + emotion);
-    setPrevEmotion(emotion);
-  }, [emotion]);
+    console.log(debouncedEmotion);
+  }, [debouncedEmotion]);
 
-  //return <video ref={videoEl} />;
+  return <video ref={videoEl} />;
 }
