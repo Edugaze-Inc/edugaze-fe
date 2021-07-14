@@ -8,9 +8,11 @@ import { Image } from '@chakra-ui/react';
 import { FormControl } from '@chakra-ui/react';
 import { useState } from 'react';
 import BottomTextPart from './BottomTextPart';
+import { useToast } from '@chakra-ui/react';
 ///////////////////////////////////////////////////////////////////
 
 const SignInForm = () => {
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   let re =
@@ -88,14 +90,13 @@ const SignInForm = () => {
         </Button>
         <BottomOrPart></BottomOrPart>
         <Button
-          leftIcon={
-            <Image
-              px={[16, 16, 'unset']}
-              mb={[16, 16, 'unset']}
-              src={GmailIcon}
-              objectFit="cover"
-            />
-          }
+          onClick={() => {
+            toast({
+              description: 'Upcoming feature',
+              status: 'info',
+              duration: 2000,
+            });
+          }}
           bgColor="#31B3C2"
           textColor="#FFFFFF"
           width="full"
