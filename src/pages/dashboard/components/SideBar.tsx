@@ -16,7 +16,6 @@ import {
   AiOutlineCalendar,
   AiOutlineHistory,
   AiOutlineBarChart,
-  AiOutlineSetting,
   AiOutlineRight,
   AiOutlineLeft,
 } from 'react-icons/ai';
@@ -91,8 +90,7 @@ export default function Sidebar() {
           />
           {/* <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} /> */}
 
-          <Link mt="25px" color="#56CAD8" p="8px"
-          onClick={logout}>
+          <Link mt="25px" color="#56CAD8" p="8px" onClick={logout}>
             <Flex flexDir="row">
               <Icon as={BiDoorOpen} fontSize="2xl" />
               <Text
@@ -103,7 +101,6 @@ export default function Sidebar() {
                 Logout
               </Text>
             </Flex>
-            
           </Link>
 
           {/* toggle navbar button */}
