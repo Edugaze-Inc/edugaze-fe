@@ -1,10 +1,28 @@
-import { Flex, Button, Image, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Flex,
+  Button,
+  Image,
+  Text,
+  useDisclosure,
+  Spinner,
+} from '@chakra-ui/react';
 import noMeetingsIcon from 'src/assets/no_meeting_img.svg';
 import MeetingCard from './components/MeetingCard';
+import { useMeetingsQuery } from './hooks/useMeetingsQuery';
 
 import { NewMeetingModal } from './NewMeetingModal';
 
-export default function Homepage({ empty }: any) {
+const EmptyList = () => (
+  <Flex flexDir="column" alignItems="center">
+    <Image src={noMeetingsIcon}></Image>
+    <Text fontSize="24px" fontWeight="bold">
+      No live meetings at the moment!
+    </Text>
+  </Flex>
+);
+
+export default function Homepage() {
+  const meetingsQuery = useMeetingsQuery();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Flex overflow="auto" w="100%" flexDir="column">
@@ -21,29 +39,28 @@ export default function Homepage({ empty }: any) {
         <NewMeetingModal isOpen={isOpen} onClose={onClose} />
       </Flex>
 
-      {/* empty state */}
-      <Flex
-        flexDir="column"
-        alignItems="center"
-        display={empty ? 'flex' : 'none'}
-      >
-        <Image src={noMeetingsIcon}></Image>
-        <Text fontSize="24px" fontWeight="bold">
-          No live meetings at the moment!
-        </Text>
-      </Flex>
-
       {/* meetings do exist */}
-      <Flex
-        flexDir="column"
-        alignItems="center"
-        justifyContent="space-between"
-        display={empty ? 'none' : 'flex'}
-      >
+      <Flex flexDir="column" alignItems="center" justifyContent="space-between">
         <Text fontSize="22px" fontWeight="light" color="#898989" mb="20px">
           Today
         </Text>
-        <MeetingCard
+
+        {meetingsQuery.isLoading || meetingsQuery.isIdle ? (
+          <Spinner />
+        ) : meetingsQuery.isError ? (
+          <Text>
+            An Error Occured!{' '}
+            {process.env.NODE_ENV === 'development' &&
+              meetingsQuery.error.response?.data}
+          </Text>
+        ) : meetingsQuery.data.length === 0 ? (
+          <EmptyList />
+        ) : (
+          meetingsQuery.data.map((meeting) => (
+            <MeetingCard key={(meeting as any)._id} {...meeting} />
+          ))
+        )}
+        {/* <MeetingCard
           courseName="Computer Networks - CSE431"
           startTime="08:00 AM"
           endTime="10:00 AM"
@@ -62,7 +79,7 @@ export default function Homepage({ empty }: any) {
 
         <Text fontSize="22px" fontWeight="light" color="#898989" mb="20px">
           May 19
-        </Text>
+        </Text> 
         <MeetingCard
           courseName="Software Maintenance - CSE426"
           startTime="09:00 AM"
@@ -72,7 +89,7 @@ export default function Homepage({ empty }: any) {
           courseName="Ontologies - CSE486"
           startTime="12:00 PM"
           endTime="02:00 PM"
-        />
+        /> */}
       </Flex>
     </Flex>
   );

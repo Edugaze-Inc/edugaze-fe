@@ -10,8 +10,11 @@ import {
   Input,
   ModalFooter,
   Button,
+  useToast,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNewMeetingMutation } from './hooks/useNewMeetingMutation';
 
 type Params = {
   title: string;
@@ -33,18 +36,27 @@ export function NewMeetingModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const [params, setParams] = useState<Params>(initialState);
-  console.log(params.startTime);
+  const toast = useToast();
+  const _onClose = () => {
+    setMeeting(initialState);
+    onClose();
+  };
+  const [meeting, setMeeting] = useState<Params>(initialState);
+  const { createMeating } = useNewMeetingMutation({
+    onSuccess: () => {
+      toast({ status: 'success', description: 'Meeting created!' });
+      _onClose();
+    },
+    onError: (error) => {
+      toast({
+        status: 'error',
+        description: error?.response?.data ?? 'An error occured!',
+      });
+    },
+  });
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        setParams(initialState);
-        onClose();
-      }}
-      isCentered
-    >
+    <Modal isOpen={isOpen} onClose={_onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Create New Meeting</ModalHeader>
@@ -52,20 +64,33 @@ export function NewMeetingModal({
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Meeting Title</FormLabel>
-            <Input value={params.title} placeholder="Meeting title" />
+            <Input
+              onChange={(e) =>
+                setMeeting((old) => ({ ...old, title: e.target.value }))
+              }
+              value={meeting.title}
+              placeholder="Meeting title"
+            />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Course Name</FormLabel>
-            <Input value={params.course} placeholder="Course name" />
+            <Input
+              onChange={(e) =>
+                setMeeting((old) => ({ ...old, course: e.target.value }))
+              }
+              value={meeting.course}
+              placeholder="Course name"
+            />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Start Time</FormLabel>
             <Input
-              value={params.startTime}
+              min={new Date().toLocaleString()}
+              value={meeting.startTime}
               onChange={(e) =>
-                setParams((old) => ({ ...old, startTime: e.target.value }))
+                setMeeting((old) => ({ ...old, startTime: e.target.value }))
               }
               type="datetime-local"
             />
@@ -74,12 +99,12 @@ export function NewMeetingModal({
           <FormControl mt={4}>
             <FormLabel>End Time</FormLabel>
             <Input
-              value={params.endTime}
+              value={meeting.endTime}
               type="datetime-local"
-              disabled={!params.startTime}
-              min={params.startTime}
+              disabled={!meeting.startTime}
+              min={meeting.startTime}
               onChange={(e) => {
-                setParams((old) => ({ ...old, endTime: e.target.value }));
+                setMeeting((old) => ({ ...old, endTime: e.target.value }));
               }}
             />
           </FormControl>
@@ -89,12 +114,13 @@ export function NewMeetingModal({
           <Button
             background="#56CAD8"
             textColor="white"
+            onClick={() => createMeating(meeting)}
             mr={3}
             _focus={{ border: 'none' }}
           >
             Create
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={_onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
