@@ -1,6 +1,14 @@
-import { Flex, Heading, Icon, Image, Link, Text, Divider, Avatar, IconButton } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Image,
+  Text,
+  Divider,
+  Avatar,
+  IconButton,
+} from '@chakra-ui/react';
 import eye_logo from 'src/assets/eye_logo.svg';
-import { useState } from "react";
+import { useState } from 'react';
 import {
     AiOutlineHome,
     AiOutlineCalendar,
@@ -12,23 +20,55 @@ import {
 } from "react-icons/ai";
 import NavItem from "./NavItem";
 import { BiDoorOpen } from "react-icons/bi";
+import { useMeQuery } from 'src/hooks/useMeQuery';
+
 
 export default function Sidebar() {
-    const [navSize, changeNavSize] = useState("large");
-    const themeColor = "#56CAD8";
+  const [navSize, changeNavSize] = useState('large');
+  const themeColor = '#56CAD8';
+  const meQuery = useMeQuery();
 
-    return (
+  return (
+    <Flex
+      w={navSize === 'small' ? '81px' : '262px'}
+      flexDir="column"
+      alignItems={navSize === 'small' ? 'center' : 'flex-start'}
+      background="white"
+    >
+      <Flex flexDir="column" justifyContent="space-between" w="100%">
+        <Flex as="nav" w={navSize === 'small' ? '53px' : '206px'} mt="28px">
+          <Image
+            w="53px"
+            ml={navSize === 'small' ? '14px' : '28px'}
+            src={eye_logo}
+          ></Image>
+          <Heading
+            ml="13px"
+            fontSize="32px"
+            alignSelf="center"
+            color="#31B3C2"
+            display={navSize === 'small' ? 'none' : 'flex'}
+          >
+            Edugaze
+          </Heading>
+        </Flex>
+
+        {/* container of nav items */}
         <Flex
-            w={navSize === "small" ? "81px" : "262px"}
-            flexDir="column"
-            alignItems={navSize === "small" ? "center" : "flex-start"}
-            background="white"
+          flexDir="column"
+          alignItems={navSize === 'small' ? 'center' : 'flex-start'}
+          justifyContent="space-between"
+          ml={navSize === 'small' ? '0px' : '28px'}
+          mt="100px"
         >
+          <Flex mt={4} align="center" mb={30}>
+            <Avatar size="sm" background={themeColor} />
             <Flex
-                flexDir="column"
-                justifyContent="space-between"
-                w="100%"
+              flexDir="row"
+              ml={4}
+              display={navSize === 'small' ? 'none' : 'flex'}
             >
+
 
                 <Flex
                     as="nav"
@@ -64,7 +104,7 @@ export default function Sidebar() {
                             display={navSize === "small" ? "none" : "flex"}
                         >
                             <Heading as="h3" size="sm" textColor={themeColor}>
-                                John Doe
+                                {meQuery.data?.username}
                             </Heading>
                         </Flex>
                     </Flex>
@@ -124,4 +164,5 @@ export default function Sidebar() {
 
         </Flex >
     );
+
 }
