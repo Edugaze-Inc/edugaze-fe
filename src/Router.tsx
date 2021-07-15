@@ -14,6 +14,7 @@ import { setMeQueryData, useMeQuery } from './hooks/useMeQuery';
 import * as cache from './util/cache';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { InMemoryToken } from './axios';
 
 async function bootstrap() {
   const me = cache.getMe();
@@ -30,6 +31,7 @@ export const MainRouter = () => {
     bootstrapPromise.then((me) => {
       setInitialAppStatus(me ? 'authenticated' : 'unauthenticated');
       setMeQueryData(me ?? undefined);
+      InMemoryToken.set(me?.token);
       console.log(me);
     });
   }, []);
