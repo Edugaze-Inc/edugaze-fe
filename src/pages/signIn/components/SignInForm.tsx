@@ -9,10 +9,20 @@ import { FormControl } from '@chakra-ui/react';
 import { useState } from 'react';
 import BottomTextPart from './BottomTextPart';
 import { useToast } from '@chakra-ui/react';
+import { useSignInMutation } from '../useSignInMutation';
 ///////////////////////////////////////////////////////////////////
 
 const SignInForm = () => {
   const toast = useToast();
+  const { signIn, isLoading } = useSignInMutation({
+    onSuccess: () => {
+      toast({ status: 'success', description: 'Signed in successfully!' });
+    },
+    onError: (error: any) => {
+      toast({ status: 'error', description: error?.response?.data });
+    },
+  });
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   let re =
@@ -23,7 +33,7 @@ const SignInForm = () => {
 
   const handleSignIn = (event: any) => {
     event.preventDefault();
-    alert(`Email: ${email} & Password: ${password}`);
+    signIn({ email, password });
   };
   let pass;
   let em;
@@ -100,6 +110,7 @@ const SignInForm = () => {
           bgColor="#31B3C2"
           textColor="#FFFFFF"
           width="full"
+          isLoading={isLoading}
           mt={4}
         >
           Sign In with Google

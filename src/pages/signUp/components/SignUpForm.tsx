@@ -9,10 +9,20 @@ import { useState } from 'react';
 import BottomTextPart from './BottomTextPart';
 import { Radio, RadioGroup } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
+import { useSignUpMutation } from './useSignUpMutation';
 ///////////////////////////////////////////////////////////////////
 
 export type Role = 'instructor' | 'student';
 const SignUpForm = () => {
+  const { signUp, isLoading } = useSignUpMutation({
+    onSuccess: () => {
+      toast({ status: 'success', description: 'Signed up successfully!' });
+    },
+    onError: (error: any) => {
+      toast({ status: 'error', description: error?.response?.data });
+    },
+  });
+
   const toast = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +42,7 @@ const SignUpForm = () => {
 
   const handleSignIn = (event: any) => {
     event.preventDefault();
-    alert(`Email: ${email} & Password: ${password}`);
+    signUp({ email, password, role: role as Role, username });
   };
   let pass;
   let em;
@@ -120,6 +130,7 @@ const SignUpForm = () => {
           textColor="#FFFFFF"
           width="full"
           mt={4}
+          isLoading={isLoading}
           marginBottom="5px"
         >
           Sign Up
