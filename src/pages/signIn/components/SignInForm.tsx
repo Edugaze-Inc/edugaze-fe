@@ -2,7 +2,6 @@ import { Button } from '@chakra-ui/button';
 import { Box, Icon, InputRightElement } from '@chakra-ui/react';
 import { Input } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
-import GmailIcon from 'src/assets/GmailIcon.svg';
 import BottomOrPart from './BottomOrPart';
 import { Image } from '@chakra-ui/react';
 import { FormControl } from '@chakra-ui/react';

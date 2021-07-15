@@ -14,7 +14,6 @@ import { setMeQueryData, useMeQuery } from './hooks/useMeQuery';
 import * as cache from './util/cache';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { queryClient } from './App';
 
 async function bootstrap() {
   const me = cache.getMe();

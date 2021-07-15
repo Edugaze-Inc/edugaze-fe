@@ -1,9 +1,7 @@
 import {
   Flex,
   Heading,
-  Icon,
   Image,
-  Link,
   Text,
   Divider,
   Avatar,
