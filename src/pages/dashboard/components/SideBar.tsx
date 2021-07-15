@@ -6,6 +6,8 @@ import {
   Divider,
   Avatar,
   IconButton,
+  Link,
+  Icon,
 } from '@chakra-ui/react';
 import eye_logo from 'src/assets/eye_logo.svg';
 import { useState } from 'react';
@@ -18,6 +20,7 @@ import {
   AiOutlineRight,
   AiOutlineLeft,
 } from 'react-icons/ai';
+import { BiDoorOpen } from 'react-icons/bi';
 import NavItem from './NavItem';
 import { useMeQuery } from 'src/hooks/useMeQuery';
 
@@ -25,7 +28,6 @@ export default function Sidebar() {
   const [navSize, changeNavSize] = useState('large');
   const themeColor = '#56CAD8';
   const meQuery = useMeQuery();
-
   return (
     <Flex
       w={navSize === 'small' ? '81px' : '262px'}
@@ -50,7 +52,6 @@ export default function Sidebar() {
             Edugaze
           </Heading>
         </Flex>
-
         {/* container of nav items */}
         <Flex
           flexDir="column"
@@ -88,6 +89,19 @@ export default function Sidebar() {
             navSize={navSize}
           />
           <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} />
+
+          <Link mt="25px" color="#56CAD8" p="8px">
+            <Flex flexDir="row">
+              <Icon as={BiDoorOpen} fontSize="2xl" />
+              <Text
+                as="u"
+                ml="14px"
+                display={navSize === 'small' ? 'none' : 'flex'}
+              >
+                Logout
+              </Text>
+            </Flex>
+          </Link>
 
           {/* toggle navbar button */}
           <Flex flexDir="row" align="center" mt="33px" mb="33px" pos="sticky">
