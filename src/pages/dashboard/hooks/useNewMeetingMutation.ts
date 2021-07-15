@@ -11,7 +11,11 @@ export function useNewMeetingMutation(
     Omit<Meeting, 'host'>
   >(
     (params) =>
-      axios.post('http://134.209.132.81:4000/api/v1/meetings/new', params),
+      axios.post('http://134.209.132.81:4000/api/v1/meetings/new', {
+        ...params,
+        startTime: new Date(params.startTime).toISOString(),
+        endTime: new Date(params.endTime).toISOString(),
+      } as Meeting),
     {
       ...options,
       onSuccess: (...params) => {

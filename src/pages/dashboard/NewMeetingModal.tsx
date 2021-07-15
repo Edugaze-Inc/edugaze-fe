@@ -12,6 +12,7 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNewMeetingMutation } from './hooks/useNewMeetingMutation';
 

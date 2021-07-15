@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useMutation, UseMutationOptions } from 'react-query';
 import { InMemoryToken } from 'src/axios';
+import { setMeQueryData } from 'src/hooks/useMeQuery';
 import { Me } from 'src/types';
 import * as cache from 'src/util/cache';
 import { Role } from './SignUpForm';
@@ -24,6 +25,7 @@ export function useSignUpMutation(
       ...options,
       onSuccess: (response, ...rest) => {
         cache.setMe(response);
+        setMeQueryData(response);
         InMemoryToken.set(response.token);
         options?.onSuccess?.(response, ...rest);
       },
