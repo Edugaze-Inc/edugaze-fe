@@ -1,8 +1,22 @@
-import { Flex, Button, Image, Text } from "@chakra-ui/react";
+import { Flex, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import noMeetingsIcon from 'src/assets/no_meeting_img.svg';
 import MeetingCard from "./components/MeetingCard";
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    FormControl,
+    FormLabel,
+    Input
+
+} from "@chakra-ui/react"
 
 export default function Homepage({ empty }: any) {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <Flex
             overflow="auto"
@@ -17,9 +31,52 @@ export default function Homepage({ empty }: any) {
                     textColor="white"
                     borderRadius="10px"
                     _focus={{ border: 'none' }}
+                    onClick={onOpen}
                 >
                     New Meeting
                 </Button>
+
+                <Modal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    isCentered
+                >
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Create New Meeting</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                            <FormControl>
+                                <FormLabel>Meeting Title</FormLabel>
+                                <Input placeholder="Meeting title" />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Course Name</FormLabel>
+                                <Input placeholder="Course name" />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Start Time</FormLabel>
+                                <Input type="datetime-local" />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>End Time</FormLabel>
+                                <Input type="datetime-local" />
+                            </FormControl>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button background="#56CAD8" textColor="white"
+                                mr={3}
+                                _focus={{ border: 'none' }}>
+                                Create
+                            </Button>
+                            <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
 
             </Flex>
 
