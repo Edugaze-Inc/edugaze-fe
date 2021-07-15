@@ -11,6 +11,7 @@ import {
     AiOutlineLeft
 } from "react-icons/ai";
 import NavItem from "./NavItem";
+import { BiDoorOpen } from "react-icons/bi";
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large");
@@ -76,11 +77,14 @@ export default function Sidebar() {
                     <NavItem icon={AiOutlineCalendar} title="Calendar" navSize={navSize} />
                     <NavItem icon={AiOutlineHistory} title="History" navSize={navSize} />
                     <NavItem icon={AiOutlineBarChart} title="Statistics" navSize={navSize} />
-                    <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} />
+                    {/* {<NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} />} */}
 
-
-
-
+                    <Link mt="25px" color="#56CAD8" p="8px">
+                        <Flex flexDir="row">
+                            <Icon as={BiDoorOpen} fontSize="2xl" />
+                            <Text as="u" ml="14px" display={navSize == "small" ? "none" : "flex"}>Logout</Text>
+                        </Flex>
+                    </Link>
 
 
                     {/* toggle navbar button */}
@@ -118,6 +122,6 @@ export default function Sidebar() {
 
             </Flex>
 
-        </Flex>
+        </Flex >
     );
 }
