@@ -6,8 +6,11 @@ export function setMe(me: Me) {
   localStorage.setItem(ME_KEY, JSON.stringify(me));
 }
 
+export function clearMe() {
+  localStorage.removeItem(ME_KEY);
+}
+
 export function getMe(): Me | null {
   const me = localStorage.getItem(ME_KEY);
-  const parsedMe = JSON.parse(ME_KEY) as Me;
-  return me ? parsedMe : null;
+  return me ? (JSON.parse(me) as Me) : null;
 }
