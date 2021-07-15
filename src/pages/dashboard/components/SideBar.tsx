@@ -23,6 +23,7 @@ import {
 import { BiDoorOpen } from 'react-icons/bi';
 import NavItem from './NavItem';
 import { useMeQuery } from 'src/hooks/useMeQuery';
+import { logout } from 'src/hooks/useMeQuery';
 
 export default function Sidebar() {
   const [navSize, changeNavSize] = useState('large');
@@ -88,9 +89,10 @@ export default function Sidebar() {
             title="Statistics"
             navSize={navSize}
           />
-          <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} />
+          {/* <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} /> */}
 
-          <Link mt="25px" color="#56CAD8" p="8px">
+          <Link mt="25px" color="#56CAD8" p="8px"
+          onClick={logout}>
             <Flex flexDir="row">
               <Icon as={BiDoorOpen} fontSize="2xl" />
               <Text
@@ -101,6 +103,7 @@ export default function Sidebar() {
                 Logout
               </Text>
             </Flex>
+            
           </Link>
 
           {/* toggle navbar button */}
