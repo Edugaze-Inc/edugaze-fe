@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { Meeting } from '../hooks/useMeetingsQuery';
+import * as _ from 'date-fns';
 
 type Props = { active?: boolean } & Meeting;
 export default function MeetingCard({
@@ -35,7 +36,8 @@ export default function MeetingCard({
             {title} - {course}
           </Heading>
           <Heading size="sm" color="gray.500">
-            {startTime} - {endTime}{' '}
+            {_.format(new Date(startTime), 'h:mm aaa')} -{' '}
+            {_.format(new Date(endTime), 'h:mm aaa')}{' '}
           </Heading>
         </Flex>
 
@@ -65,7 +67,7 @@ export default function MeetingCard({
         >
           <HStack spacing={2}>
             <Icon as={AiOutlineFieldTime} fontSize="2xl" />
-            <Text>in 2 hrs</Text>
+            <Text>in {_.formatDistanceToNowStrict(new Date(startTime))}</Text>
           </HStack>
         </Flex>
       </Flex>

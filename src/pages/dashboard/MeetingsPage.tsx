@@ -56,7 +56,9 @@ export default function Homepage() {
         ) : meetingsQuery.data.length === 0 ? (
           <EmptyList />
         ) : (
-          meetingsQuery.data.map((meeting) => <MeetingCard {...meeting} />)
+          meetingsQuery.data.map((meeting) => (
+            <MeetingCard key={(meeting as any)._id} {...meeting} />
+          ))
         )}
         {/* <MeetingCard
           courseName="Computer Networks - CSE431"
