@@ -1,11 +1,11 @@
-import { Center, useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useMeeting, UseMeetingReturn } from './useMeeting';
 import Room from 'src/twilio-components/Room/Room';
 import { VideoProvider } from 'src/twilio-components/VideoProvider';
 import useConnectionOptions from 'src/utils/useConnectionOptions/useConnectionOptions';
 import useVideoContext from 'src/hooks/useVideoContext/useVideoContext';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider, styled } from '@material-ui/core/styles';
 import theme from 'src/theme';
 import PreJoinScreens from 'src/twilio-components/PreJoinScreens/PreJoinScreens';
 
@@ -42,12 +42,17 @@ function River({
   console.log(room);
 
   return (
-    <Center>
+    <Container style={{ height: '100vh' }}>
       {room?.state === 'disconnected' || !room ? (
         <PreJoinScreens isFetching={isLoading} token={meetingConfig.token!} />
       ) : (
         <Room />
       )}
-    </Center>
+    </Container>
   );
 }
+
+const Container = styled('div')({
+  display: 'grid',
+  gridTemplateRows: '1fr auto',
+});

@@ -14,7 +14,8 @@ export default function MainParticipant() {
   const screenShareParticipant = useScreenShareParticipant();
 
   const videoPriority =
-    (mainParticipant === selectedParticipant || mainParticipant === screenShareParticipant) &&
+    (mainParticipant === selectedParticipant ||
+      mainParticipant === screenShareParticipant) &&
     mainParticipant !== localParticipant
       ? 'high'
       : null;
