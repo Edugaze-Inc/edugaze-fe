@@ -2,24 +2,60 @@ import {
   Box,
   Flex,
   Heading,
-  HStack,
-  Link,
   Text,
   Button,
   Icon,
+  IconButton,
+  useClipboard,
+  useToast,
 } from '@chakra-ui/react';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { Meeting } from '../hooks/useMeetingsQuery';
 import * as _ from 'date-fns';
+import { useMeQuery } from 'src/hooks/useMeQuery';
+import { useEffect, useState } from 'react';
+import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 
-type Props = { active?: boolean } & Meeting;
+const RemainingTime = ({ startTime }: { startTime: string }) => (
+  <Flex color="gray.400" mr="10px" alignItems="center">
+    <Icon me={2} as={AiOutlineFieldTime} fontSize="2xl" />
+    <Text>in {_.formatDistanceToNowStrict(new Date(startTime))}</Text>
+  </Flex>
+);
+
+const baseUrl = 'localhost:3000';
+type Props = Meeting;
 export default function MeetingCard({
   course,
   startTime,
   endTime,
+  _id,
   title,
-  active,
+  status,
 }: Props) {
+  const [canStart, setCanStart] = useState(
+    _.isBefore(new Date(), new Date(startTime))
+  );
+  const meetingLink = `${baseUrl}/meeting/${_id}`;
+  const { hasCopied, onCopy: _onCopy, value } = useClipboard(meetingLink, {});
+  const toast = useToast({
+    status: 'success',
+    description: `${value} is copied `,
+  });
+  const onCopy = () => {
+    _onCopy();
+    toast();
+  };
+  useEffect(() => {
+    const clear = setInterval(() => {
+      setCanStart(_.isBefore(new Date(), new Date(startTime)));
+    }, 1000 * 60);
+    return () => {
+      clearInterval(clear);
+    };
+  }, [startTime]);
+
+  const { data: me } = useMeQuery();
   return (
     <Box
       w="90%"
@@ -41,34 +77,33 @@ export default function MeetingCard({
           </Heading>
         </Flex>
 
-        <Flex display={active ? 'flex' : 'none'}>
-          <HStack spacing={8}>
-            <Link>
-              <Text color="#56CAD8" as="u">
-                Share Meeting
-              </Text>
-            </Link>
-            <Button
-              background="#56CAD8"
-              textColor="white"
-              borderRadius="10px"
-              _focus={{ border: 'none' }}
-            >
-              Start NOW
-            </Button>
-          </HStack>
-        </Flex>
-
-        <Flex
-          display={active ? 'none' : 'active'}
-          color="gray.400"
-          mt="25px"
-          mr="10px"
-        >
-          <HStack spacing={2}>
-            <Icon as={AiOutlineFieldTime} fontSize="2xl" />
-            <Text>in {_.formatDistanceToNowStrict(new Date(startTime))}</Text>
-          </HStack>
+        <Flex alignItems="center">
+          {me?.role === 'instructor' ? (
+            <>
+              <IconButton
+                onClick={onCopy}
+                variant="outline"
+                me={4}
+                colorScheme="teal"
+                aria-label=""
+                icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
+              />
+              {canStart ? (
+                <Button
+                  background="#56CAD8"
+                  textColor="white"
+                  borderRadius="10px"
+                  _focus={{ border: 'none' }}
+                >
+                  Start NOW
+                </Button>
+              ) : (
+                <RemainingTime startTime={startTime} />
+              )}
+            </>
+          ) : (
+            <RemainingTime startTime={startTime} />
+          )}
         </Flex>
       </Flex>
     </Box>

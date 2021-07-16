@@ -12,7 +12,6 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNewMeetingMutation } from './hooks/useNewMeetingMutation';
 
@@ -42,7 +41,7 @@ export function NewMeetingModal({
     onClose();
   };
   const [meeting, setMeeting] = useState<Params>(initialState);
-  const { createMeating } = useNewMeetingMutation({
+  const { createMeating: createMeeting } = useNewMeetingMutation({
     onSuccess: () => {
       toast({ status: 'success', description: 'Meeting created!' });
       _onClose();
@@ -54,7 +53,17 @@ export function NewMeetingModal({
       });
     },
   });
-
+  function compareTime() {
+    var startTime = new Date(meeting.startTime);
+    var endTime = new Date(meeting.endTime);
+    if (startTime.getTime() > endTime.getTime()) {
+      toast({
+        status: 'error',
+        description: 'Meeting end time cannot be earlier than start time',
+      });
+      return;
+    } else createMeeting(meeting);
+  }
   return (
     <Modal isOpen={isOpen} onClose={_onClose} isCentered>
       <ModalOverlay />
@@ -87,7 +96,7 @@ export function NewMeetingModal({
           <FormControl mt={4}>
             <FormLabel>Start Time</FormLabel>
             <Input
-              min={new Date().toLocaleString()}
+              min={new Date().toISOString().slice(0, -8)}
               value={meeting.startTime}
               onChange={(e) =>
                 setMeeting((old) => ({ ...old, startTime: e.target.value }))
@@ -114,7 +123,8 @@ export function NewMeetingModal({
           <Button
             background="#56CAD8"
             textColor="white"
-            onClick={() => createMeating(meeting)}
+            // onClick={() => createMeating(meeting)}
+            onClick={() => compareTime()}
             mr={3}
             _focus={{ border: 'none' }}
           >

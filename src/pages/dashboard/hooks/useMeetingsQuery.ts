@@ -11,6 +11,8 @@ export type Meeting = {
   course: string;
   host: string;
   startTime: string;
+  _id: string;
+  status: 'incoming' | 'ended' | 'current';
   endTime: string;
 };
 
