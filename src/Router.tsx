@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { InMemoryToken } from './axios';
 import { Meeting } from './pages/meeting/Meeting';
-import { useRef } from 'react';
 
 async function bootstrap() {
   const me = cache.getMe();

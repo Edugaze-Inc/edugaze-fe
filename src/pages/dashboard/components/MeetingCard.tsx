@@ -15,6 +15,7 @@ import * as _ from 'date-fns';
 import { useMeQuery } from 'src/hooks/useMeQuery';
 import { useEffect, useState } from 'react';
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+import { useStartMeetingMutation } from '../hooks/useStartMeetingMutation';
 
 const RemainingTime = ({ startTime }: { startTime: string }) => (
   <Flex color="gray.400" mr="10px" alignItems="center">
@@ -33,6 +34,7 @@ export default function MeetingCard({
   title,
   status,
 }: Props) {
+  const { start } = useStartMeetingMutation(_id);
   const [canStart, setCanStart] = useState(
     _.isAfter(new Date(), new Date(startTime))
   );
@@ -91,6 +93,7 @@ export default function MeetingCard({
               {canStart ? (
                 <Button
                   background="#56CAD8"
+                  onClick={() => start()}
                   textColor="white"
                   borderRadius="10px"
                   _focus={{ border: 'none' }}
