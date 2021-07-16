@@ -1,5 +1,4 @@
-import { join } from 'path';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Meeting } from '../dashboard/hooks/useMeetingsQuery';
 import { useJoinMutation } from './useJoinMutation';
 import { useSubscribeMutation } from './useSubscribeMutation';
@@ -9,7 +8,7 @@ type UseMeetingParams = {
   onError?: (error: Error) => void;
   onSuccess?: (token: string, meeting: Meeting) => void;
 };
-type UseMeetingReturn =
+export type UseMeetingReturn =
   | {
       isSuccess: true;
       token: string;

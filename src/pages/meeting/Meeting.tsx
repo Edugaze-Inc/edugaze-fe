@@ -1,22 +1,53 @@
-import { Center } from '@chakra-ui/react';
+import { Center, useToast } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useMeeting } from './useMeeting';
-import { connect } from 'twilio-video';
-import { useEffect } from 'react';
+import { useMeeting, UseMeetingReturn } from './useMeeting';
+import Room from 'src/twilio-components/Room/Room';
+import { VideoProvider } from 'src/twilio-components/VideoProvider';
+import useConnectionOptions from 'src/utils/useConnectionOptions/useConnectionOptions';
+import useVideoContext from 'src/hooks/useVideoContext/useVideoContext';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from 'src/theme';
+import PreJoinScreens from 'src/twilio-components/PreJoinScreens/PreJoinScreens';
+
 export const Meeting = () => {
+  const connectionOptions = useConnectionOptions();
   const { id } = useParams<{ id: string }>();
+  const toast = useToast();
   const meetingConfig = useMeeting({ id });
-  // console.log(meetingConfig);
-  useEffect(() => {
-    if (meetingConfig.token)
-      connect(meetingConfig.token)
-        .then((res) => console.log(res))
-        .catch(console.error);
-  }, [meetingConfig.token]);
   return (
-    <Center>
-      {/* <div>NEW MEETING {id}</div> */}
-      <pre>{JSON.stringify(meetingConfig, null, 2)}</pre>
-    </Center>
+    <MuiThemeProvider theme={theme}>
+      <VideoProvider
+        options={connectionOptions}
+        onError={(error) =>
+          toast({ description: error.message, status: 'error' })
+        }
+      >
+        <River
+          meetingConfig={meetingConfig}
+          isLoading={meetingConfig.isLoading}
+        />
+      </VideoProvider>
+    </MuiThemeProvider>
   );
 };
+
+function River({
+  meetingConfig,
+  isLoading,
+}: {
+  meetingConfig: UseMeetingReturn;
+  isLoading: boolean;
+}) {
+  const { room } = useVideoContext();
+  console.log(room);
+
+  return (
+    <Center>
+      {room?.state === 'disconnected' || !room ? (
+        <PreJoinScreens isFetching={isLoading} token={meetingConfig.token!} />
+      ) : (
+        <Room />
+      )}
+    </Center>
+  );
+}
