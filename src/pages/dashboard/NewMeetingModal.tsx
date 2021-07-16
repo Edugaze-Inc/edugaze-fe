@@ -12,7 +12,6 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNewMeetingMutation } from './hooks/useNewMeetingMutation';
 
@@ -55,13 +54,15 @@ export function NewMeetingModal({
     },
   });
   function compareTime() {
-    var startTime = new Date(meeting.startTime)
-    var endTime = new Date(meeting.endTime)
+    var startTime = new Date(meeting.startTime);
+    var endTime = new Date(meeting.endTime);
     if (startTime.getTime() > endTime.getTime()) {
-      toast({ status: 'error', description: 'Meeting end time cannot be earlier than start time' })
+      toast({
+        status: 'error',
+        description: 'Meeting end time cannot be earlier than start time',
+      });
       return;
-    }
-    else createMeeting(meeting);
+    } else createMeeting(meeting);
   }
   return (
     <Modal isOpen={isOpen} onClose={_onClose} isCentered>
@@ -115,7 +116,6 @@ export function NewMeetingModal({
                 setMeeting((old) => ({ ...old, endTime: e.target.value }));
               }}
             />
-
           </FormControl>
         </ModalBody>
 
@@ -136,5 +136,3 @@ export function NewMeetingModal({
     </Modal>
   );
 }
-
-
