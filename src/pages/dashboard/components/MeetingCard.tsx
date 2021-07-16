@@ -34,7 +34,7 @@ export default function MeetingCard({
   status,
 }: Props) {
   const [canStart, setCanStart] = useState(
-    _.isBefore(new Date(), new Date(startTime))
+    _.isAfter(new Date(), new Date(startTime))
   );
   const meetingLink = `${baseUrl}/meeting/${_id}`;
   const { hasCopied, onCopy: _onCopy, value } = useClipboard(meetingLink, {});
@@ -48,7 +48,7 @@ export default function MeetingCard({
   };
   useEffect(() => {
     const clear = setInterval(() => {
-      setCanStart(_.isBefore(new Date(), new Date(startTime)));
+      setCanStart(_.isAfter(new Date(), new Date(startTime)));
     }, 1000 * 60);
     return () => {
       clearInterval(clear);

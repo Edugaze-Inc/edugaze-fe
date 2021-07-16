@@ -15,6 +15,8 @@ import * as cache from './util/cache';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { InMemoryToken } from './axios';
+import { Meeting } from './pages/meeting/Meeting';
+import { useRef } from 'react';
 
 async function bootstrap() {
   const me = cache.getMe();
@@ -29,15 +31,19 @@ export const MainRouter = () => {
 
   useEffect(() => {
     bootstrapPromise.then((me) => {
-      setInitialAppStatus(me ? 'authenticated' : 'unauthenticated');
       setMeQueryData(me ?? undefined);
       InMemoryToken.set(me?.token);
-      console.log(me);
+      if (!me) setInitialAppStatus('unauthenticated');
     });
   }, []);
-
-  if (initialAppStatus === 'loading') return null;
-  if (!meQuery.data)
+  useEffect(() => {
+    if (meQuery.data) {
+      setInitialAppStatus('authenticated');
+    }
+  }, [meQuery.data]);
+  // console.log(meQuery.data, initialAppStatus);
+  if (initialAppStatus === 'loading') return <div>loading</div>;
+  if (initialAppStatus === 'unauthenticated')
     return (
       <Router>
         <ScrollToTop />
@@ -51,7 +57,7 @@ export const MainRouter = () => {
           <Route exact path="/signup">
             <FullSignUpForm />
           </Route>
-          <Route path="/">
+          <Route>
             <Redirect to="/" />
           </Route>
         </Switch>
@@ -61,10 +67,13 @@ export const MainRouter = () => {
     <Router>
       <ScrollToTop />
       <Switch>
-        <Route exact path="/dashboard">
+        <Route path="/dashboard">
           <DashboardHomepage />
         </Route>
-        <Route path="/">
+        <Route exact path="/meeting/:id">
+          <Meeting />
+        </Route>
+        <Route>
           <Redirect to="/dashboard" />
         </Route>
       </Switch>

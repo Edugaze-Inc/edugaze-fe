@@ -57,7 +57,7 @@ export default function Homepage() {
           <EmptyList />
         ) : (
           meetingsQuery.data.map((meeting) => (
-            <MeetingCard key={(meeting as any)._id} {...meeting} />
+            <MeetingCard key={meeting._id} {...meeting} />
           ))
         )}
         {/* <MeetingCard
