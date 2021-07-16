@@ -8,6 +8,9 @@ import useVideoContext from 'src/hooks/useVideoContext/useVideoContext';
 import { MuiThemeProvider, styled } from '@material-ui/core/styles';
 import theme from 'src/theme';
 import PreJoinScreens from 'src/twilio-components/PreJoinScreens/PreJoinScreens';
+import { EmotionDetector } from 'src/components/EmotionDetector';
+import { useMeQuery } from 'src/hooks/useMeQuery';
+import { EmotionReceiver } from 'src/components/EmotionReceiver';
 
 export const Meeting = () => {
   const connectionOptions = useConnectionOptions();
@@ -39,7 +42,7 @@ function River({
   isLoading: boolean;
 }) {
   const { room } = useVideoContext();
-  console.log(room);
+  const me = useMeQuery().data;
 
   return (
     <Container style={{ height: '100vh' }}>
@@ -48,6 +51,8 @@ function River({
       ) : (
         <Room />
       )}
+      {me?.role === 'student' && <EmotionDetector />}
+      {me?.role === 'instructor' && <EmotionReceiver />}
     </Container>
   );
 }

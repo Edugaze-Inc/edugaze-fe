@@ -22,8 +22,6 @@ export default function VideoTrack({
   priority,
 }: VideoTrackProps) {
   const ref = useRef<HTMLVideoElement>(null!);
-  console.log(isLocal, 'sadasd');
-
   const mediaStreamTrack = useMediaStreamTrack(track);
   const dimensions = useVideoTrackDimensions(track);
   const isPortrait = (dimensions?.height ?? 0) > (dimensions?.width ?? 0);
