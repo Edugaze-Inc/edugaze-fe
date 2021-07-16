@@ -20,7 +20,15 @@ export default function MeetingCard({
   title,
   active,
 }: Props) {
+
+  function showStartMeeting() {
+    if (new Date().getTime() >= new Date(startTime).getTime()) {
+      active=true
+    }
+  }
+  showStartMeeting();
   return (
+    
     <Box
       w="90%"
       h="110px"
