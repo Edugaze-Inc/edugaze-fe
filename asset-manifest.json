@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/edugaze-fe/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/edugaze-fe/static/js/main.1de7b715.chunk.js",
+    "main.js.map": "/edugaze-fe/static/js/main.1de7b715.chunk.js.map",
+    "runtime-main.js": "/edugaze-fe/static/js/runtime-main.d06ba03a.js",
+    "runtime-main.js.map": "/edugaze-fe/static/js/runtime-main.d06ba03a.js.map",
+    "static/css/2.32263268.chunk.css": "/edugaze-fe/static/css/2.32263268.chunk.css",
+    "static/js/2.aeded695.chunk.js": "/edugaze-fe/static/js/2.aeded695.chunk.js",
+    "static/js/2.aeded695.chunk.js.map": "/edugaze-fe/static/js/2.aeded695.chunk.js.map",
+    "static/js/3.d13338e5.chunk.js": "/edugaze-fe/static/js/3.d13338e5.chunk.js",
+    "static/js/3.d13338e5.chunk.js.map": "/edugaze-fe/static/js/3.d13338e5.chunk.js.map",
+    "index.html": "/edugaze-fe/index.html",
+    "static/css/2.32263268.chunk.css.map": "/edugaze-fe/static/css/2.32263268.chunk.css.map",
+    "static/css/main.6dea0f05.chunk.css.map": "/edugaze-fe/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.aeded695.chunk.js.LICENSE.txt": "/edugaze-fe/static/js/2.aeded695.chunk.js.LICENSE.txt",
+    "static/media/eye_logo.65f81cbb.svg": "/edugaze-fe/static/media/eye_logo.65f81cbb.svg",
+    "static/media/landing1.f9c7b665.svg": "/edugaze-fe/static/media/landing1.f9c7b665.svg",
+    "static/media/landing2.a9fc1781.svg": "/edugaze-fe/static/media/landing2.a9fc1781.svg",
+    "static/media/landing3.e3206560.svg": "/edugaze-fe/static/media/landing3.e3206560.svg",
+    "static/media/landing4.f5adfe34.svg": "/edugaze-fe/static/media/landing4.f5adfe34.svg",
+    "static/media/landing5.395f2b72.svg": "/edugaze-fe/static/media/landing5.395f2b72.svg",
+    "static/media/no_meeting_img.395e68a8.svg": "/edugaze-fe/static/media/no_meeting_img.395e68a8.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d06ba03a.js",
+    "static/css/2.32263268.chunk.css",
+    "static/js/2.aeded695.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.1de7b715.chunk.js"
+  ]
+}
