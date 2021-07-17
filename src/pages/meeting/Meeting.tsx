@@ -12,46 +12,33 @@ import { EmotionDetector } from 'src/components/EmotionDetector';
 import { useMeQuery } from 'src/hooks/useMeQuery';
 import { EmotionReceiver } from 'src/components/EmotionReceiver';
 import { useState } from 'react';
+import { Chart } from './Chart';
+export enum Emotions {
+  HAPPY = 'Happy',
+  NEUTRAL = 'Neutral',
+  SAD = 'Sad',
+  SURPRISED = 'Surprised',
+  DISGUSTED = 'Disgusted',
+  FEARFUL = 'Fearful',
+  OUT = 'Out',
+  ANGRY = 'Angry',
+}
+const initialState = {
+  Angry: 0,
+  Disgusted: 0,
+  Fearful: 0,
+  Happy: 0,
+  Neutral: 0,
+  Out: 0,
+  Sad: 0,
+  Surprised: 0,
+} as Record<Emotions, number>;
 
 export const Meeting = () => {
   const connectionOptions = useConnectionOptions();
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
   const meetingConfig = useMeeting({ id });
-  const [emotions, useEmotions] = useState([
-    {
-      label: 'happy',
-      data: [],
-    },
-    {
-      label: 'sad',
-      data: [],
-    },
-    {
-      label: 'fearful',
-      data: [],
-    },
-    {
-      label: 'neutral',
-      data: [],
-    },
-    {
-      label: 'angry',
-      data: [],
-    },
-    {
-      label: 'disgusted',
-      data: [],
-    },
-    {
-      label: 'out',
-      data: [],
-    },
-    {
-      label: 'surprised',
-      data: [],
-    },
-  ]);
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -61,7 +48,7 @@ export const Meeting = () => {
           toast({ description: error.message, status: 'error' })
         }
       >
-        <River
+        <HarlemRiver
           meetingConfig={meetingConfig}
           isLoading={meetingConfig.isLoading}
         />
@@ -70,7 +57,8 @@ export const Meeting = () => {
   );
 };
 
-function River({
+// xoxox
+function HarlemRiver({
   meetingConfig,
   isLoading,
 }: {
@@ -79,17 +67,27 @@ function River({
 }) {
   const { room } = useVideoContext();
   const me = useMeQuery().data;
+  const [emotions, setEmotions] = useState(initialState);
+
+  console.log(emotions);
 
   return (
-    <Container style={{ height: '100vh' }}>
-      {room?.state === 'disconnected' || !room ? (
-        <PreJoinScreens isFetching={isLoading} token={meetingConfig.token!} />
-      ) : (
-        <Room />
-      )}
-      {me?.role === 'student' && <EmotionDetector />}
-      {me?.role === 'instructor' && <EmotionReceiver />}
-    </Container>
+    <>
+      <Container style={{ height: '100vh' }}>
+        {room?.state === 'disconnected' || !room ? (
+          <PreJoinScreens isFetching={isLoading} token={meetingConfig.token!} />
+        ) : (
+          <Room />
+        )}
+        {me?.role === 'student' && <EmotionDetector />}
+        {me?.role === 'instructor' && (
+          <>
+            <EmotionReceiver setEmotions={setEmotions} />
+            {room?.state === 'connected' && <Chart emotions={emotions} />}
+          </>
+        )}
+      </Container>
+    </>
   );
 }
 

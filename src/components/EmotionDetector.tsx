@@ -7,6 +7,8 @@ import { useMeQuery } from 'src/hooks/useMeQuery';
 
 export const socket = io('http://134.209.132.84:4004/');
 
+faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
+faceapi.nets.faceExpressionNet.loadFromUri('/model');
 export function EmotionDetector() {
   const { id: meetingId } = useParams<{ id: string }>();
   const [emotion, setEmotion] = useState('');
@@ -14,14 +16,8 @@ export function EmotionDetector() {
   const me = useMeQuery().data!;
   const videoEl = useRef<HTMLVideoElement | null>(null);
   let requestRef = useRef<number>();
-  async function init() {
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
-    await faceapi.nets.faceExpressionNet.loadFromUri('/model');
-  }
 
   useEffect(() => {
-    init();
-
     if (!videoEl) {
       return;
     }
