@@ -23,7 +23,7 @@ import { logout } from 'src/hooks/useMeQuery';
 
 export default function Sidebar() {
   const [navSize, changeNavSize] = useState('large');
-  const [chosen, setChosen] = useState("");
+  const [chosen, setChosen] = useState("Home");
   const themeColor = '#56CAD8';
   const meQuery = useMeQuery();
   const navItems = ["Home", "Calendar", "History", "Statistics"]

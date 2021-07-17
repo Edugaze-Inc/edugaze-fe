@@ -7,6 +7,7 @@ import {
 
 export default function NavItem({ icon, title, active, navSize, onClick }: any) {
   switch (title) {
+    
     case "Calendar": icon = AiOutlineCalendar; break;
     case "History": icon = AiOutlineHistory; break;
     case "Statistics": icon = AiOutlineBarChart; break;
