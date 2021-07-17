@@ -1,23 +1,32 @@
 import { useRef, useEffect, useState } from 'react';
 import * as faceapi from '@vladmandic/face-api';
 import { useDebounce } from 'use-debounce/lib';
+import io from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+import { useMeQuery } from 'src/hooks/useMeQuery';
 
-export function useEmotionDetector() {
+export const socket = io('http://134.209.132.84:4004/');
+
+faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
+faceapi.nets.faceExpressionNet.loadFromUri('/model');
+export function EmotionDetector() {
+  const { id: meetingId } = useParams<{ id: string }>();
   const [emotion, setEmotion] = useState('');
   const debouncedEmotion = useDebounce(emotion, 250)[0];
+  const me = useMeQuery().data!;
   const videoEl = useRef<HTMLVideoElement | null>(null);
   let requestRef = useRef<number>();
-  async function init() {
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
-    await faceapi.nets.faceExpressionNet.loadFromUri('/model');
-  }
 
   useEffect(() => {
-    init();
-
     if (!videoEl) {
       return;
     }
+
+    socket.emit('join', { meeting: meetingId, username: me.username } as {
+      meeting: string;
+      username: string;
+    });
+
     let video = videoEl.current;
 
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
@@ -60,12 +69,25 @@ export function useEmotionDetector() {
     return () => {
       video!.removeEventListener('playing', detectEmotions);
     };
-  }, [videoEl]);
+  }, [me.username, meetingId, videoEl]);
 
   useEffect(() => {
-    //call analysis api here
+    !!debouncedEmotion &&
+      socket.emit('emotion update', {
+        msg: debouncedEmotion,
+        meeting: meetingId,
+        username: me.username,
+      } as { msg: string; meeting: string; username: string });
     console.log(debouncedEmotion);
-  }, [debouncedEmotion]);
+  }, [debouncedEmotion, me.username, meetingId]);
 
-  //return <video ref={videoEl} />;
+  return (
+    <video
+      ref={videoEl}
+      style={{
+        visibility: 'hidden',
+        position: 'absolute',
+      }}
+    />
+  );
 }
