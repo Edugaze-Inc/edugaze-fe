@@ -21,11 +21,16 @@ export function EmotionDetector() {
 
   useEffect(() => {
     init();
-    socket.emit('join', { sid: `${meetingId}-${me.username}` });
 
     if (!videoEl) {
       return;
     }
+
+    socket.emit('join', { meeting: meetingId, username: me.username } as {
+      meeting: string;
+      username: string;
+    });
+
     let video = videoEl.current;
 
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
@@ -74,8 +79,9 @@ export function EmotionDetector() {
     !!debouncedEmotion &&
       socket.emit('emotion update', {
         msg: debouncedEmotion,
-        id: `${meetingId}-${me.username}`,
-      });
+        meeting: meetingId,
+        username: me.username,
+      } as { msg: string; meeting: string; username: string });
     console.log(debouncedEmotion);
   }, [debouncedEmotion, me.username, meetingId]);
 
@@ -84,6 +90,7 @@ export function EmotionDetector() {
       ref={videoEl}
       style={{
         visibility: 'hidden',
+        position: 'absolute',
       }}
     />
   );
