@@ -11,12 +11,48 @@ import PreJoinScreens from 'src/twilio-components/PreJoinScreens/PreJoinScreens'
 import { EmotionDetector } from 'src/components/EmotionDetector';
 import { useMeQuery } from 'src/hooks/useMeQuery';
 import { EmotionReceiver } from 'src/components/EmotionReceiver';
+import { useState } from 'react';
 
 export const Meeting = () => {
   const connectionOptions = useConnectionOptions();
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
   const meetingConfig = useMeeting({ id });
+  const [emotions, useEmotions] = useState([
+    {
+      label: 'happy',
+      data: [],
+    },
+    {
+      label: 'sad',
+      data: [],
+    },
+    {
+      label: 'fearful',
+      data: [],
+    },
+    {
+      label: 'neutral',
+      data: [],
+    },
+    {
+      label: 'angry',
+      data: [],
+    },
+    {
+      label: 'disgusted',
+      data: [],
+    },
+    {
+      label: 'out',
+      data: [],
+    },
+    {
+      label: 'surprised',
+      data: [],
+    },
+  ]);
+
   return (
     <MuiThemeProvider theme={theme}>
       <VideoProvider

@@ -10347,6 +10347,11 @@ react-focus-lock@2.5.0:
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
 
+react-graphs@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-graphs/-/react-graphs-0.1.0.tgz#8ac8317acb81c92b3e7987906457eb0c1bc5771b"
+  integrity sha1-isgxesuBySs+eYeQZFfrDBvFdxs=
+
 react-hook-form@^7.8.8:
   version "7.10.1"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.10.1.tgz#fd7c78ab72402c2f4a7ac4f6184e84ff0df129b2"
