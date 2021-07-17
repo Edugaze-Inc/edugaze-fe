@@ -1,9 +1,9 @@
-import { Box, IconButton } from '@chakra-ui/react';
+// Created by Ziyad, Hager Jul 17 5:12 AM
+import { Box } from '@chakra-ui/react';
 import { CChartDoughnut } from '@coreui/react-chartjs';
 import { Emotions } from './Meeting';
-import { RiEmotionLine } from 'react-icons/ri';
-import { useState } from 'react';
-// Created by Ziyad Jul 17 5:12 AM
+// import { RiEmotionLine } from 'react-icons/ri';
+// import { useState } from 'react';
 type Props = {
   emotions: Record<Emotions, number>;
 };
