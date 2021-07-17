@@ -13,9 +13,6 @@ import eye_logo from 'src/assets/eye_logo.svg';
 import { useState } from 'react';
 import {
   AiOutlineHome,
-  AiOutlineCalendar,
-  AiOutlineHistory,
-  AiOutlineBarChart,
   AiOutlineRight,
   AiOutlineLeft,
 } from 'react-icons/ai';
@@ -26,8 +23,11 @@ import { logout } from 'src/hooks/useMeQuery';
 
 export default function Sidebar() {
   const [navSize, changeNavSize] = useState('large');
+  const [chosen, setChosen] = useState("");
   const themeColor = '#56CAD8';
   const meQuery = useMeQuery();
+  const navItems = ["Home", "Calendar", "History", "Statistics"]
+
   return (
     <Flex
       w={navSize === 'small' ? '81px' : '262px'}
@@ -76,19 +76,16 @@ export default function Sidebar() {
           <Divider w={navSize === 'small' ? '40px' : '206px'} align="center" />
 
           {/* individual nav items */}
-          <NavItem icon={AiOutlineHome} title="Home" navSize={navSize} active />
-          <NavItem
-            icon={AiOutlineCalendar}
-            title="Calendar"
-            navSize={navSize}
-          />
-          <NavItem icon={AiOutlineHistory} title="History" navSize={navSize} />
-          <NavItem
-            icon={AiOutlineBarChart}
-            title="Statistics"
-            navSize={navSize}
-          />
-          {/* <NavItem icon={AiOutlineSetting} title="Settings" navSize={navSize} /> */}
+
+          {navItems.map(item => (
+            <NavItem
+              icon={AiOutlineHome}
+              title={item}
+              navSize={navSize}
+              active={item === chosen}
+              onClick={() => setChosen(item)}
+            />
+          ))}
 
           <Link mt="25px" color="#56CAD8" p="8px" onClick={logout}>
             <Flex flexDir="row">

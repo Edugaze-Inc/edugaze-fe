@@ -1,12 +1,23 @@
 import { Flex, Text, Icon, Link, Menu, MenuButton } from '@chakra-ui/react';
+import {
+  AiOutlineCalendar,
+  AiOutlineHistory,
+  AiOutlineBarChart,
+} from 'react-icons/ai';
 
-export default function NavItem({ icon, title, active, navSize }: any) {
+export default function NavItem({ icon, title, active, navSize, onClick }: any) {
+  switch (title) {
+    case "Calendar": icon = AiOutlineCalendar; break;
+    case "History": icon = AiOutlineHistory; break;
+    case "Statistics": icon = AiOutlineBarChart; break;
+  }
   return (
     <Flex
       mt="25px"
       flexDir="column"
       w="100%"
       alignItems={navSize === 'small' ? 'center' : 'flex-start'}
+      onClick={onClick}
     >
       <Menu placement="right">
         <Link
