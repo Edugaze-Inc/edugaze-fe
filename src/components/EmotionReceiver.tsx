@@ -5,7 +5,7 @@ import { socket } from './EmotionDetector';
 export function EmotionReceiver() {
   const { id: meetingId } = useParams<{ id: string }>();
   useEffect(() => {
-    socket.emit('join', { sid: `${meetingId}` });
+    socket.emit('join', { meeting: `${meetingId}` });
     socket.on('emotion update', (msg) => {
       console.log('AAAAH', msg);
     });
