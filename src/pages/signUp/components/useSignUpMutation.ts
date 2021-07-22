@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useMutation, UseMutationOptions } from 'react-query';
-import { InMemoryToken } from 'src/axios';
+import { baseUrl, InMemoryToken } from 'src/axios';
 import { setMeQueryData } from 'src/hooks/useMeQuery';
 import { Me } from 'src/types';
 import * as cache from 'src/util/cache';
@@ -18,7 +18,7 @@ export function useSignUpMutation(
   const { mutate: signUp, ...rest } = useMutation<Me, Error, SignUpParams>(
     (params) => {
       return axios
-        .post('http://178.128.140.169:4002/api/v1/auth/signup', params)
+        .post(`${baseUrl}/auth/v1/signup`, params)
         .then((res) => res.data);
     },
     {

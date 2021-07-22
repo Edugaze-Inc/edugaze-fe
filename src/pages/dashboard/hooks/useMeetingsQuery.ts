@@ -1,6 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import axios, { AxiosError } from 'axios';
 import { queryClient } from 'src/App';
+import { baseUrl } from 'src/axios';
 
 const MEETINGS_KEY = 'meetings-key';
 
@@ -24,7 +25,7 @@ export function useMeetingsQuery(
     [MEETINGS_KEY, status],
     () =>
       axios
-        .get(`http://134.209.132.81:4000/api/v1/meetings/list?status=${status}`)
+        .get(`${baseUrl}/meetings/v1/list?status=${status}`)
         .then((res) => res.data),
     options
   );

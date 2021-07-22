@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useMutation, UseMutationOptions } from 'react-query';
+import { baseUrl } from 'src/axios';
 import { Meeting } from '../dashboard/hooks/useMeetingsQuery';
 
 export function useSubscribeMutation(
@@ -9,7 +10,7 @@ export function useSubscribeMutation(
   const { mutate: subscribe, ...rest } = useMutation<Meeting, Error>(
     () =>
       axios
-        .post(`http://134.209.132.81:4000/api/v1/meetings/subscribe/${id}`)
+        .post(`${baseUrl}/meetings/v1/subscribe/${id}`)
         .then((res) => res.data),
     options
   );

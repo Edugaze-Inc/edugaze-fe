@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import { Me } from 'src/types';
 import { queryClient } from 'src/App';
-import { InMemoryToken } from 'src/axios';
+import { baseUrl, InMemoryToken } from 'src/axios';
 import * as cache from 'src/util/cache';
 
 const ME_KEY = 'me-query';
@@ -10,10 +10,7 @@ const ME_KEY = 'me-query';
 export function useMeQuery(options?: UseQueryOptions<Me>) {
   return useQuery<Me>(
     ME_KEY,
-    () =>
-      axios
-        .get('http://178.128.140.169:4002/api/v1/auth/verify')
-        .then((res) => res.data),
+    () => axios.get(`${baseUrl}/auth/v1/verify`).then((res) => res.data),
     {
       refetchOnMount: false,
       enabled: !!InMemoryToken.get(),

@@ -4,11 +4,13 @@ import { useDebounce } from 'use-debounce/lib';
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { useMeQuery } from 'src/hooks/useMeQuery';
+import { baseUrl } from 'src/axios';
 
-export const socket = io('http://134.209.132.84:4004/');
+export const socket = io(`${baseUrl}/analysis`);
 
 faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
 faceapi.nets.faceExpressionNet.loadFromUri('/model');
+
 export function EmotionDetector() {
   const { id: meetingId } = useParams<{ id: string }>();
   const [emotion, setEmotion] = useState('');
