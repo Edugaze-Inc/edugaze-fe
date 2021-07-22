@@ -13,6 +13,8 @@ import { useMeQuery } from 'src/hooks/useMeQuery';
 import { EmotionReceiver } from 'src/components/EmotionReceiver';
 import { useState } from 'react';
 import { Chart } from './Chart';
+import MenuBar from 'src/twilio-components/MenuBar/MenuBar';
+
 export enum Emotions {
   HAPPY = 'Happy',
   NEUTRAL = 'Neutral',
@@ -74,7 +76,10 @@ function HarlemRiver({
         {room?.state === 'disconnected' || !room ? (
           <PreJoinScreens isFetching={isLoading} token={meetingConfig.token!} />
         ) : (
-          <Room />
+          <>
+            <Room />
+            <MenuBar />
+          </>
         )}
         {me?.role === 'student' && <EmotionDetector />}
         {me?.role === 'instructor' && (
