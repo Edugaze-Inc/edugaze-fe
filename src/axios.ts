@@ -14,3 +14,5 @@ export const InMemoryToken = (() => {
   };
   return { get, set };
 })();
+
+export const baseUrl = 'https://api.edugaze.me';

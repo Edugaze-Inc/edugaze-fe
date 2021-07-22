@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, UseMutationOptions } from 'react-query';
+import { baseUrl } from 'src/axios';
 import { invalidateMeetingsQuery } from './useMeetingsQuery';
 
 export function useStartMeetingMutation(
@@ -8,9 +9,7 @@ export function useStartMeetingMutation(
 ) {
   const { mutate: start, ...rest } = useMutation<string, AxiosError>(
     () =>
-      axios
-        .post(`http://134.209.132.81:4000/api/v1/meetings/start/${id}`)
-        .then((res) => res.data),
+      axios.post(`${baseUrl}/meetings/v1/start/${id}`).then((res) => res.data),
     { ...options, onSuccess: invalidateMeetingsQuery }
   );
   return { start, ...rest };

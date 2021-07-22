@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, UseMutationOptions } from 'react-query';
+import { baseUrl } from 'src/axios';
 import { invalidateMeetingsQuery, Meeting } from './useMeetingsQuery';
 
 type BaseMeeting = Omit<Omit<Omit<Meeting, 'host'>, 'status'>, '_id'>;
@@ -12,7 +13,7 @@ export function useNewMeetingMutation(
     BaseMeeting
   >(
     (params) =>
-      axios.post('http://134.209.132.81:4000/api/v1/meetings/new', {
+      axios.post(`${baseUrl}/meetings/v1/new`, {
         ...params,
         startTime: new Date(params.startTime).toISOString(),
         endTime: new Date(params.endTime).toISOString(),
