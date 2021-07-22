@@ -68,9 +68,6 @@ function HarlemRiver({
   const { room } = useVideoContext();
   const me = useMeQuery().data;
   const [emotions, setEmotions] = useState(initialState);
-
-  console.log(emotions);
-
   return (
     <>
       <Container style={{ height: '100vh' }}>

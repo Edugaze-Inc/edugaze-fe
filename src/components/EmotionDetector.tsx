@@ -6,12 +6,21 @@ import { useParams } from 'react-router-dom';
 import { useMeQuery } from 'src/hooks/useMeQuery';
 import { baseUrl } from 'src/axios';
 
-export const socket = io(`${baseUrl}/analysis`);
+export const socket = io(`${baseUrl}`, {
+  path: '/analysis/socket.io/',
+});
 
-faceapi.nets.ssdMobilenetv1.loadFromUri('/model');
-faceapi.nets.faceExpressionNet.loadFromUri('/model');
-
+const model = Promise.all([
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/model'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/model'),
+]);
 export function EmotionDetector() {
+  const [status, setStatus] = useState<'loading' | 'loaded'>('loading');
+  useEffect(() => {
+    model.then(() => {
+      setStatus('loaded');
+    });
+  }, []);
   const { id: meetingId } = useParams<{ id: string }>();
   const [emotion, setEmotion] = useState('');
   const debouncedEmotion = useDebounce(emotion, 250)[0];
@@ -23,7 +32,7 @@ export function EmotionDetector() {
     if (!videoEl) {
       return;
     }
-
+    if (status === 'loading') return;
     socket.emit('join', { meeting: meetingId, username: me.username } as {
       meeting: string;
       username: string;
@@ -71,7 +80,7 @@ export function EmotionDetector() {
     return () => {
       video!.removeEventListener('playing', detectEmotions);
     };
-  }, [me.username, meetingId, videoEl]);
+  }, [me.username, meetingId, status, videoEl]);
 
   useEffect(() => {
     !!debouncedEmotion &&
