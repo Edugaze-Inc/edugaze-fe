@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: any) => {
   return {
     container: {
       position: 'relative',
-      height: '100%',
+      height: 'calc(100vh - 50px)',
       display: 'grid',
       gridTemplateColumns: `1fr ${theme.sidebarWidth}px`,
       gridTemplateRows: '100%',

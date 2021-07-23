@@ -19,20 +19,20 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       left: 0,
       right: 0,
-      height: `${200}px`,
+      height: `${50}px`,
       position: 'fixed',
       display: 'flex',
       padding: '0 1.43em',
       zIndex: 10,
       [theme.breakpoints.down('sm')]: {
-        height: `${100}px`,
+        height: `${50}px`,
         padding: 0,
       },
     },
     screenShareBanner: {
       position: 'fixed',
       zIndex: 8,
-      bottom: `${200}px`,
+      bottom: `${50}px`,
       left: 0,
       right: 0,
       height: '104px',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '& button': {
         background: 'white',
-        color: '#dfd',
+        color: '#000',
         border: `2px solid ${'#f60'}`,
         margin: '0 2em',
         '&:hover': {
