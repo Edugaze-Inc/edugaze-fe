@@ -16,6 +16,7 @@ import { useMeQuery } from 'src/hooks/useMeQuery';
 import { useEffect, useState } from 'react';
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import { useStartMeetingMutation } from '../hooks/useStartMeetingMutation';
+import { useHistory } from 'react-router-dom';
 
 const RemainingTime = ({ startTime }: { startTime: string }) => (
   <Flex color="gray.400" mr="10px" alignItems="center">
@@ -24,7 +25,7 @@ const RemainingTime = ({ startTime }: { startTime: string }) => (
   </Flex>
 );
 
-const baseUrl = 'localhost:3000';
+const baseUrl = 'https://app.edugaze.me';
 type Props = Meeting;
 export default function MeetingCard({
   course,
@@ -34,7 +35,12 @@ export default function MeetingCard({
   title,
   status,
 }: Props) {
-  const { start } = useStartMeetingMutation(_id);
+  const history = useHistory();
+  const { start } = useStartMeetingMutation(_id, {
+    onSuccess: () => {
+      history.push(`/meeting/${_id}`);
+    },
+  });
   const [canStart, setCanStart] = useState(
     _.isAfter(new Date(), new Date(startTime))
   );

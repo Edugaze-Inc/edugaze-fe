@@ -1,6 +1,6 @@
 // Created by Ziyad, Hager Jul 17 5:12 AM
 import { Box, IconButton } from '@chakra-ui/react';
-import { CChartBar  } from '@coreui/react-chartjs';
+import { CChartPolarArea } from '@coreui/react-chartjs';
 
 import { Emotions } from './Meeting';
 import { RiEmotionLine } from 'react-icons/ri';
@@ -21,7 +21,7 @@ export function Chart({ emotions }: Props) {
           onClick={() => setOpen(true)}
         />
       ) : (
-        <CChartBar  
+        <CChartPolarArea
           style={{ width: 350 }}
           onClick={() => setOpen(false)}
           labels={[

@@ -10,7 +10,13 @@ export function useStartMeetingMutation(
   const { mutate: start, ...rest } = useMutation<string, AxiosError>(
     () =>
       axios.post(`${baseUrl}/meetings/v1/start/${id}`).then((res) => res.data),
-    { ...options, onSuccess: invalidateMeetingsQuery }
+    {
+      ...options,
+      onSuccess: (...params) => {
+        invalidateMeetingsQuery();
+        options?.onSuccess?.(...params);
+      },
+    }
   );
   return { start, ...rest };
 }

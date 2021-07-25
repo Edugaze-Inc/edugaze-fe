@@ -32,8 +32,6 @@ const useStyles = makeStyles((theme: any) => {
 
 export default function Room() {
   const classes = useStyles();
-  console.log();
-
   return (
     <div className={clsx(classes.container)}>
       <MainParticipant />
